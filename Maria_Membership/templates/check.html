@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block body2 %}
+<div class="complete"
+  style="padding-left:100px; padding-right:100px; padding-top:50px; padding-bottom:50px; text-align: center; font-size:35px; margin-bottom:30px;">
+  <label>회 원
+    가 입 완 료</label></div>
+<div class="st" style="font-family: 'Jua', sans-serif;">
+  <form action="{% url 'Maria_membership:reqfaceRecog' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning btn-lg btn-block mt-3">얼굴인식 로그인</button>
+  </form>
+</div>
+
+<style>
+  .complete {
+    top: 10%;
+  }
+</style>
+{% endblock %}

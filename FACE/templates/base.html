@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FaceShip</title>
+
+  <!-- favicon -->
+  <link rel="icon" href="{% static 'img/favicon_logo.png' %}">
+
+  <!-- 부트스트랩 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- google font -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div style="font-family: 'Jua', sans-serif; font-size:40px;">
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'Maria_membership:home' %}"><span
+          style="color: dodgerblue; font-size:27px;">Face</span><span
+          style="color: lightseagreen; font-size:27px;">Ship</span></a>
+      <div>
+        <a href="{% url 'Maria_membership:menu' %}" style=" color:white; margin-right:6px;">메뉴보기</a>
+        {% if username == '' %}
+        <a href="{% url 'Maria_membership:information' %}" style=" color:white;">회원가입</a>
+        <form class="" action="{% url 'Maria_membership:reqfaceRecog' %}" method="POST"
+          style="display:inline; cursor: pointer;text-align: right;">
+          {% csrf_token %}
+          <input class="login" type="submit" style="border: none; background: transparent; color: white;" value="로그인">
+          <style>
+            .login:hover {
+              text-decoration: underline;
+            }
+          </style>
+        </form>
+        {% else %}
+        <a href="{% url 'Maria_membership:mypage' %}" style="color:white;">내 정보</a>
+        <a href="{% url 'Maria_membership:home' %}" style="color:white;">로그아웃</a>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+  <div class="container" style="height:px; font-family: 'Jua', sans-serif;">
+    {% block body %}
+    {% endblock %}
+  </div>
+
+  <div class="container" style="width: 500px; align-content: center; font-family: 'Jua', sans-serif;">
+    {% block body2 %}
+    {% endblock %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+</body>
+
+
+</html>
+<style>
+  .btn {
+    font-size: 30px;
+  }
+
+  .nav {
+    font-size: 30px;
+  }
+</style>

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block body2 %}
+<div class="st">
+  <div class="complete"
+    style="padding-left:100px; padding-right:100px; padding-top:50px; padding-bottom:10px; text-align: center; font-size:35px; margin-bottom:30px;">
+    <label>주문을 확인해주세요</label>
+  </div>
+  <script>
+    var ame = "{{form.americano.value}}";
+    var lat = "{{form.latte.value}}";
+    var smo = "{{form.smoothy.value}}"
+    // if (ame != "0") {
+    //   document.write('아메리카노')
+    //   document.write(ame)
+    // }
+
+    // if (lat != "0") {
+    //   document.write('라떼')
+    //   document.write(lat)
+    // }
+
+    // if (smo != "0") {
+    //   document.write('스무디')
+    //   document.write(smo)
+    // }
+
+  </script>
+  <div class="alert alert-dark" role="alert" style="height:auto; text-align: center; font-size: 35px; ">
+    <p style="margin-top: auto;">
+      {% for x in form %}
+      {% if x.value != '0' %}
+      {% if x.name == 'americano' %}
+      <p> 아메리카노 : {{x.value}}</p>
+      {% elif x.name == 'latte' %}
+      <p> 라떼 : {{x.value}}</p>
+      {% elif x.name == 'smoothy' %}
+      <p> 스무디 : {{x.value}}</p>
+      {% elif x.name == 'total' %}
+      <p> 합계 : {{x.value}}개</p>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+
+    </p>
+  </div>
+  <form action="{% url 'Maria_membership:order_complete' %}" method="POST">
+    {% csrf_token %}
+    <div style="display:none;">
+      {{form.americano}}
+      {{form.latte}}
+      {{form.smoothy}}
+      {{form.total}}
+    </div>
+    <button type="submit" class="btn btn-info btn-lg btn-block">주문 완료</button>
+  </form>
+  <form action="{% url 'Maria_membership:menu' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning btn-lg btn-block mt-3">주문 취소</button>
+  </form>
+</div>
+{% endblock %}
+
+<style>
+  .complete {
+    top: 10%;
+  }
+
+  .st {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+  }
+</style>

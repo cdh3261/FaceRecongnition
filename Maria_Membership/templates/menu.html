@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FACE-SHIP</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <!-- favicon -->
+  <link rel="icon" href="{% static 'img/favicon_logo.png' %}">
+</head>
+
+<body onload="init();" style="font-family: 'Jua', sans-serif;">
+  <!-- 네브바 -->
+  <div style="font-family: 'Jua', sans-serif; font-size:40px;">
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'Maria_membership:home' %}"><span
+          style="color: dodgerblue; font-size:27px;">Face</span><span
+          style="color: lightseagreen; font-size:27px;">Ship</span></a>
+      <div>
+        <a href="{% url 'Maria_membership:menu' %}" style=" color:white; margin-right:6px;">메뉴보기</a>
+        {% if username == '' %}
+        <a href="{% url 'Maria_membership:information' %}" style=" color:white;">회원가입</a>
+        <form class="" action="{% url 'Maria_membership:reqfaceRecog' %}" method="POST"
+          style="display:inline; cursor: pointer;text-align: right;">
+          {% csrf_token %}
+          <input class="login" type="submit" style="border: none; background: transparent; color: white;" value="로그인">
+          <style>
+            .login:hover {
+              text-decoration: underline;
+            }
+          </style>
+        </form>
+        {% else %}
+        <a href="{% url 'Maria_membership:mypage' %}" style="color:white;">내 정보</a>
+        <a href="{% url 'Maria_membership:home' %}" style="color:white;">로그아웃</a>
+        {% endif %}
+      </div>
+    </nav>
+  </div>
+  <div>
+    <!-- Team -->
+    <section id="team" class="pb-5" style="margin-top:50px;">
+      <form class="menu-text" name="form1" method="POST" action="{% url 'Maria_membership:menu' %}">
+        {% csrf_token %}
+        <div style="margin: 5rem; font-size:35px;">
+          <h5 class="section-title h1">메 뉴</h5>
+          <br>
+          <div class="row">
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4">
+              <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                <div class="mainflip">
+                  <div class="frontside">
+                    <div class="card">
+                      <div class="card-body text-center">
+                        <p><img class=" img-fluid" src="{% static 'img/ame.jpg' %}" style="width:200px;"
+                            alt="card image">
+                        </p>
+                        <h4 class="card-title" style="font-size: 30px;">아메리카노</h4>
+                        <span style="margin-right: 20px; margin-left: 2px;">
+                          <span>수량</span>
+                          <input type=hidden id="sell_price1" name="sell_price1" value="3000">
+                          {{form.americano}}개
+                          <span>금액</span>
+                          <input class="money" type="text" name="sum1" size="6" readonly>원
+                        </span>
+                        <input type="button" class="btn btn-outline-primary btn-sm" value='+'
+                          onclick="add1(); change4();">
+                        <input type="button" class="btn btn-outline-primary btn-sm" value='-'
+                          onclick="del1(); change4();">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4">
+              <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                <div class="mainflip">
+                  <div class="frontside">
+                    <div class="card">
+                      <div class="card-body text-center">
+                        <p><img class=" img-fluid" src="{% static 'img/latte.jpg' %}" style="width:200px;"
+                            alt="card image"></p>
+                        <h4 class="card-title" style="font-size:35px;">라떼</h4>
+                        <!-- <p class="card-text">This is basic card with image on top, title, description and button.</p> -->
+                        <span style="margin-right: 20px; margin-left: 2px;">
+                          <span>수량</span> <input type=hidden name="sell_price2" value="4000">
+                          {{form.latte}}개
+                          <span>금액</span>
+                          <input class="money" type="text" name="sum2" size="6" readonly>원
+                        </span>
+
+                        <input type="button" class="btn btn-outline-primary btn-sm" value='+'
+                          onclick="add2(); change4();">
+                        <input type="button" class="btn btn-outline-primary btn-sm" value='-'
+                          onclick="del2(); change4();">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ./Team member -->
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4">
+              <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+                <div class="mainflip">
+                  <div class="frontside">
+                    <div class="card">
+                      <div class="card-body text-center">
+                        <p><img class=" img-fluid" src="{% static 'img/smoo.jfif' %}" style="width:255px;">
+                        </p>
+                        <h4 class="card-title" style="font-size:35px;">스무디</h4>
+                        <!-- <p class="card-text">This is basic card with image on top, title, description and button.</p> -->
+                        <span style="margin-right: 20px; margin-left: 2px;">
+                          <span>수량</span>
+                          <input type=hidden name="sell_price3" value="5000">
+                          {{form.smoothy}}개
+                          <span>금액</span>
+                          <input class="money" type="text" name="sum3" size="6" readonly>원
+                        </span>
+
+                        <input type="button" class="btn btn-outline-primary btn-sm" value='+'
+                          onclick="add3(); change4();">
+                        <input type="button" class="btn btn-outline-primary btn-sm" value='-'
+                          onclick="del3(); change4();">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ./Team member -->
+          </div>
+        </div>
+        <br>
+        <div style="text-align:right; margin-right: 5rem; font-size: 40px;">
+          <div style="display: none;">
+            <span>총 수량 </span>
+            {{form.total}}개
+          </div>
+          <span>총 금액 </span>
+          <input class="money" type="text" name="sum4" size="6" readonly>원
+          {% if username != "" %}
+          <input type="submit" class="btn btn-outline-danger btn-lg" value='주문하기'>
+          {% endif %}
+        </div>
+      </form>
+    </section>
+    <!-- JAVA Script -->
+    <script language="JavaScript">
+      var sell_price1;
+      var sell_price2;
+      var sell_price3;
+
+      var americano;
+      var latte;
+      var smoothy;
+      var total;
+
+      var sum4;
+
+      // 초기 실행
+      function init() {
+        sell_price1 = document.form1.sell_price1.value;
+        americano = document.form1.americano.value;
+        document.form1.sum1.value = sell_price1;
+        change1();
+
+        sell_price2 = document.form1.sell_price2.value;
+        latte = document.form1.latte.value;
+        document.form1.sum2.value = sell_price2;
+        change2();
+
+        sell_price3 = document.form1.sell_price3.value;
+        smoothy = document.form1.smoothy.value;
+        document.form1.sum3.value = sell_price3;
+        change3();
+
+        change4();
+
+      }
+
+      function add1() {
+        hm1 = document.form1.americano;
+        sum1 = document.form1.sum1;
+        hm1.value++;
+        sum1111 = document.form1.sum1111;
+        sum_a = parseInt(hm1.value) * sell_price1;
+
+        sum1.value = sum_a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        document.getElementsByName('sum4').value = sum4
+      }
+      function add2() {
+        hm2 = document.form1.latte;
+        sum2 = document.form1.sum2;
+        hm2.value++;
+        sum_b = parseInt(hm2.value) * sell_price2;
+
+        sum2.value = sum_b.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+      }
+      function add3() {
+        hm3 = document.form1.smoothy;
+        sum3 = document.form1.sum3;
+        hm3.value++;
+        sum_c = parseInt(hm3.value) * sell_price3;
+
+        sum3.value = sum_c.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+      }
+
+      function del1() {
+        hm1 = document.form1.americano;
+        sum1 = document.form1.sum1;
+
+        if (hm1.value > 0) {
+          hm1.value--;
+          aa = parseInt(hm1.value) * sell_price1;
+          sum1.value = aa.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+          sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        }
+      }
+      function del2() {
+        hm2 = document.form1.latte;
+        sum2 = document.form1.sum2;
+        if (hm2.value > 0) {
+          hm2.value--;
+          bb = parseInt(hm2.value) * sell_price2;
+          sum2.value = bb.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+          sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        }
+      }
+      function del3() {
+        hm3 = document.form1.smoothy;
+        sum3 = document.form1.sum3;
+        if (hm3.value > 0) {
+          hm3.value--;
+          cc = parseInt(hm3.value) * sell_price3;
+          sum3.value = cc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+          sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        }
+      }
+
+      function change1() {
+        hm1 = document.form1.americano;
+        sum1 = document.form1.sum1;
+        sum1111 = document.form1.sum1111;
+
+        if (hm1.value < 0) {
+          hm1.value = 0;
+        }
+        sum1.value = parseInt(hm1.value) * sell_price1;
+
+
+      }
+      function change2() {
+        hm2 = document.form1.latte;
+        sum2 = document.form1.sum2;
+
+        if (hm2.value < 0) {
+          hm2.value = 0;
+        }
+        sum2.value = parseInt(hm2.value) * sell_price2;
+
+
+      }
+      function change3() {
+        hm3 = document.form1.smoothy;
+        sum3 = document.form1.sum3;
+
+        if (hm3.value < 0) {
+          hm3.value = 0;
+        }
+        sum3.value = parseInt(hm3.value) * sell_price3;
+
+      }
+
+      function change4() {
+        hm1 = document.form1.americano;
+        hm2 = document.form1.latte;
+        hm3 = document.form1.smoothy;
+        document.form1.total.value = parseInt(hm1.value) + parseInt(hm2.value) + parseInt(hm3.value)
+
+        sum1 = document.form1.sum1;
+        sum2 = document.form1.sum2;
+        sum3 = document.form1.sum3;
+        sum4 = document.form1.sum4;
+        to = (parseInt(hm1.value) * sell_price1) + (parseInt(hm2.value) * sell_price2) + (parseInt(hm3.value) * sell_price3)
+        sum4.value = to.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+    </script>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
+<style>
+  .menu-text_td>span {
+    font-size: 20px;
+  }
+
+  .menu-text_td {
+    width: 28%;
+  }
+
+  .out {
+    width: 100%;
+    text-align: center;
+  }
+
+  .in {
+    display: inline-block;
+  }
+
+  .money {
+    text-align: right;
+    border: none;
+    background: transparent;
+  }
+</style>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body2 %}
+<div class="st">
+    <img class="rounded mx-auto d-block" src="https://newsimg.hankookilbo.com/2017/04/06/201704060483488399_1.jpg"
+        class="img-fluid" alt="Responsive image">
+    <h1 style="text-align:center;">회원이 아닙니다.</h1>
+    <a href="{% url 'Maria_membership:information' %}"><button type="button"
+            class="btn btn-info btn-lg btn-block">회원가입</button></a>
+    <form action="{% url 'Maria_membership:reqfaceRecog' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-warning btn-lg btn-block mt-3">얼굴인식 로그인</button>
+    </form>
+</div>
+<style>
+    .st {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%)
+    }
+</style>
+{% endblock %}

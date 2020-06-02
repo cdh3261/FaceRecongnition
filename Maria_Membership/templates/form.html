@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+<form action="{% url 'Maria_membership:reqfacePicture' %}" method="POST">
+  {% csrf_token %}
+  <div class="info" style="width: 800px; height: 300px;">
+    <table class="info_table style">
+      <tr style="height:80px; font-size: 36px;">
+        <th style="width:300px; text-align: center;">이 름</th>
+        <td>{{form.uName}}</td>
+      </tr>
+      <tr style="height:80px; font-size: 36px;">
+        <th style="text-align: center;">생 년 월 일</th>
+        <td>{{form.uBirthDay}}</td>
+      </tr>
+      <tr style="height:80px; font-size: 36px;">
+        <th style="text-align: center;">전 화 번 호</th>
+        <td>{{form.uPhone}}</td>
+      </tr>
+    </table>
+    
+    <button type='submit' class='btn btn-primary btn-lg btn-block' style="font-size: 36px; margin-top:50px;">사진
+      촬영하기</button>
+  </div>
+</form>
+<style>
+  .info {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+  }
+</style>
+{% endblock %}

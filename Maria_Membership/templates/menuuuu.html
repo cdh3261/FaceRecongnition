@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>FACE-SHIP</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Jua&display=swap" rel="stylesheet">
+</head>
+
+<body onload="init();" style="font-family: 'Jua', sans-serif;">
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'Maria_membership:home' %}">FACE-SHIP</a>
+
+    <div class="dropdown">
+      <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Page list
+      </a>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="{% url 'Maria_membership:menu' %}">Menu</a>
+        <a class="dropdown-item" href="{% url 'Maria_membership:reqfaceRecog' %}">Recognition</a>
+        <a class="dropdown-item" href="{% url 'Maria_membership:information' %}">Signup</a>
+        <a class="dropdown-item" href="{% url 'Maria_membership:mypage' %}">MyPage</a>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    {% load static %}
+    <div class="info" style="width: 1200px; height: 300px; margin-top:30px;">
+      
+      <table class="info_table">
+        <tr>
+          <td style="width:300px;"><img src="{% static 'img/ame.jpg' %}" style="width:150px;" /></td>
+          <td style="width:300px;"><img src="{% static 'img/latte.jfif' %}" style="width:150px;" /></td>
+          <td style="width:300px;"><img src="{% static 'img/smoo.jfif' %}" style="width:150px;" /></td>
+        </tr>
+        <tr>
+          <form class="menu-text" name="form1" method="POST" action="{% url 'Maria_membership:menu'  %}">
+            {% csrf_token %}
+            <td class="menu-text_td">
+              <span>수량 </span>
+              <input type=hidden id="sell_price1" name="sell_price1" value="3000">
+              {{form.americano}}
+              <input type="button" value=" + " onclick="add1(); change4();" style="margin:5px;"><input type="button"
+                value=" - " onclick="del1(); change4();"><br>
+              <span>금액 </span>
+              <input type="text" name="sum1" size="6" readonly>원
+
+            </td>
+            <td class="menu-text_td">
+              <span>수량 </span> <input type=hidden name="sell_price2" value="4">
+              {{form.latte}}
+              <input type="button" value=" + " onclick="add2(); change4();" style="margin:5px;"><input type="button"
+                value=" - " onclick="del2(); change4();"><br>
+              <span>금액 </span>
+              <input type="text" name="sum2" size="6" readonly>원
+
+            </td>
+            <td class="menu-text_td">
+              <span>수량 </span>
+              <input type=hidden name="sell_price3" value="5">
+              {{form.smoothy}}
+              <input type="button" value=" + " onclick="add3(); change4();" style="margin:5px;"><input type="button"
+                value=" - " onclick="del3(); change4();"><br>
+              <span>금액 </span>
+              <input type="text" name="sum3" size="6" readonly>원
+            </td>
+            <td class="menu-text_td">
+              <span>총 수량 </span>
+              {{form.total}}개
+              <br>
+              <span>총 금액 </span>
+              <input type="text" name="sum4" size="6" readonly>원
+              
+              <input type="submit" value='주문하기'>
+              
+            </td>
+          </form>
+        </tr>
+      </table>
+
+    </div>
+    <!-- JAVA Script -->
+    <script language="JavaScript">
+      var sell_price1;
+      var sell_price2;
+      var sell_price3;
+
+      var americano;
+      var latte;
+      var smoothy;
+      var total;
+
+      var sum4;
+
+      // 초기 실행
+      function init() {
+        sell_price1 = document.form1.sell_price1.value;
+        americano = document.form1.americano.value;
+        document.form1.sum1.value = sell_price1;
+        change1();
+
+        sell_price2 = document.form1.sell_price2.value;
+        latte = document.form1.latte.value;
+        document.form1.sum2.value = sell_price2;
+        change2();
+
+        sell_price3 = document.form1.sell_price3.value;
+        smoothy = document.form1.smoothy.value;
+        document.form1.sum3.value = sell_price3;
+        change3();
+
+        change4();
+
+      }
+
+      function add1() {
+        hm1 = document.form1.americano;
+        sum1 = document.form1.sum1;
+        hm1.value++;
+
+        sum1.value = parseInt(hm1.value) * sell_price1;
+
+        sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        document.getElementsByName('sum4').value = sum4
+        
+      }
+      function add2() {
+        hm2 = document.form1.latte;
+        sum2 = document.form1.sum2;
+        hm2.value++;
+
+        sum2.value = parseInt(hm2.value) * sell_price2;
+
+        sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+      }
+      function add3() {
+        hm3 = document.form1.smoothy;
+        sum3 = document.form1.sum3;
+        hm3.value++;
+
+        sum3.value = parseInt(hm3.value) * sell_price3;
+
+        sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+      }
+
+      function del1() {
+        hm1 = document.form1.americano;
+        sum1 = document.form1.sum1;
+        if (hm1.value > 0) {
+          hm1.value--;
+          sum1.value = parseInt(hm1.value) * sell_price1;
+
+          sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        }
+      }
+      function del2() {
+        hm2 = document.form1.latte;
+        sum2 = document.form1.sum2;
+        if (hm2.value > 0) {
+          hm2.value--;
+          sum2.value = parseInt(hm2.value) * sell_price2;
+
+          sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        }
+      }
+      function del3() {
+        hm3 = document.form1.smoothy;
+        sum3 = document.form1.sum3;
+        if (hm3.value > 0) {
+          hm3.value--;
+          sum3.value = parseInt(hm3.value) * sell_price3;
+
+          sum4 = parseInt(sum1.value) + parseInt(sum2.value) + parseInt(sum3.value);
+        }
+      }
+
+      function change1() {
+        hm1 = document.form1.americano;
+        sum1 = document.form1.sum1;
+
+        if (hm1.value < 0) {
+          hm1.value = 0;
+        }
+        sum1.value = (parseInt(hm1.value) * sell_price1);
+        
+        /*document.getElementsByName('sum4').value = sum4.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");*/
+      }
+      function change2() {
+        hm2 = document.form1.latte;
+        sum2 = document.form1.sum2;
+
+        if (hm2.value < 0) {
+          hm2.value = 0;
+        }
+        sum2.value = parseInt(hm2.value) * sell_price2;
+
+
+      }
+      function change3() {
+        hm3 = document.form1.smoothy;
+        sum3 = document.form1.sum3;
+
+        if (hm3.value < 0) {
+          hm3.value = 0;
+        }
+        sum3.value = parseInt(hm3.value) * sell_price3;
+
+      }
+
+      function change4() {
+        hm1 = document.form1.americano;
+        hm2 = document.form1.latte;
+        hm3 = document.form1.smoothy;
+        document.form1.total.value = parseInt(hm1.value) + parseInt(hm2.value) + parseInt(hm3.value)
+
+        sum1 = document.form1.sum1;
+        sum2 = document.form1.sum2;
+        sum3 = document.form1.sum3;
+        sum4 = document.form1.sum4;
+
+        sum4.value = (parseInt(hm1.value) * sell_price1) + (parseInt(hm2.value) * sell_price2) + (parseInt(hm3.value) * sell_price3);
+      }
+    </script>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <div class="bg-dark pt-2" style="position:absolute; left:0; bottom: 0; width:100%; " id="footer">footer</div>
+</body>
+</html>
+<style>
+  .menu-text_td>span {
+    font-size: 20px;
+  }
+</style>

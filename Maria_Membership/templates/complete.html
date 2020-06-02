@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<div class="complete"
+    style="padding-top: 20px; padding-bottom: 20px; padding-left:100px; padding-right:100px; text-align: center;">
+    <span style="width: 300px; font-size:36px;">안녕하세요!</span>
+    <span style="width: 300px; font-size:36px; color:blue;">{{userName}}님</span>
+</div>
+
+<section id="tabs" class="project-tab">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                            <span class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                role="tab" aria-controls="nav-home" aria-selected="true" style="font-size: 40px;">자주먹은
+                                메뉴</span>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                            aria-labelledby="nav-home-tab">
+                            <table class="table" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>메뉴</th>
+                                        <th>누적 개수</th>
+                                        <th>가격</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{first_menu}}</td>
+                                        <td>{{first}}개</td>
+                                        <td>{{first_price}}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{second_menu}}</td>
+                                        <td>{{second}}개</td>
+                                        <td>{{second_price}}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{third_menu}}</td>
+                                        <td>{{third}}개</td>
+                                        <td>{{third_price}}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align: center;">스탬프 개수: {{total}}개</td>
+                                        <!-- <td>2</td>
+                                        <td>3</td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-sm-12">
+                        <div class="col-sm-6" style="float: left;">
+                            <form action="{% url 'Maria_membership:stamp' %}" method="POST">
+                                {% csrf_token %}
+                                <div>
+                                    <input type="submit" class="btn btn-outline-primary btn-lg" value="스탬프 사용">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-sm-6" style="float: right;">
+                            <form action="{% url 'Maria_membership:menu' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" class="btn btn-outline-danger btn-lg" value="주문하기">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                {% if total == 0 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp0.png'%}" class="img-fluid">
+                {% elif total == 1 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp1.png'%}" class="img-fluid">
+                {% elif total == 2 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp2.png'%}" class="img-fluid">
+                {% elif total == 3 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp3.png'%}" class="img-fluid">
+
+                {% elif total == 4 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp4.png'%}" class="img-fluid">
+
+                {% elif total == 5 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp5.png'%}" class="img-fluid">
+
+                {% elif total == 6 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp6.png'%}" class="img-fluid">
+
+                {% elif total == 7 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp7.png'%}" class="img-fluid">
+
+                {% elif total == 8 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp8.png'%}" class="img-fluid">
+
+                {% elif total == 9 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp9.png'%}" class="img-fluid">
+
+                {% elif total >= 10 %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp10.png'%}" class="img-fluid">
+                {% else %}
+                <img class="rounded mx-auto d-block" src="{% static 'img/stamp0.png'%}" class="img-fluid">
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</section>
+<style>
+    .project-tab {
+        padding: 10%;
+        margin-top: -8%;
+    }
+
+    .project-tab #tabs {
+        background: #007b5e;
+        color: #eee;
+    }
+
+    .project-tab #tabs h6.section-title {
+        color: #eee;
+    }
+
+    .project-tab #tabs .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+        color: #0062cc;
+        background-color: transparent;
+        border-color: transparent transparent #f3f3f3;
+        border-bottom: 3px solid !important;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .project-tab .nav-link {
+        border: 1px solid transparent;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+        color: #0062cc;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .project-tab .nav-link:hover {
+        border: none;
+    }
+
+    .project-tab thead {
+        background: #f3f3f3;
+        color: #333;
+    }
+
+    .project-tab a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 600;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid #bcbcbc;
+        font-size: 20px;
+    }
+
+    table {
+        width: 600px;
+    }
+</style>
+{% endblock %}
